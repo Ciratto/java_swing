@@ -1,7 +1,7 @@
 package com.udemy.java_swing;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,17 +10,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class JavaSwing03LayoutGrid extends JFrame implements ActionListener {
+public class JavaSwing02FlowLayout extends JFrame implements ActionListener {
 	//Cuando arranca contruyo la pantalla.
 	public static void main(String[] args) {
-		new JavaSwing03LayoutGrid();
+		new JavaSwing02FlowLayout();
 
 	}
 
-	public JavaSwing03LayoutGrid() {
+	public JavaSwing02FlowLayout() {
 		super("Ejemplo de Ventana con Entorno Flotante");
 		
-		JPanel panel = new JPanel(new GridLayout(4,3,8,4));
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT,10,20));
 
 		for (int i=1;i<=10;i++) {
 			JButton btnAceptar = new JButton("Aceptar ".concat(String.valueOf(i)));
@@ -34,10 +34,12 @@ public class JavaSwing03LayoutGrid extends JFrame implements ActionListener {
 		setVisible(true);
 		setSize(600,200);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		System.out.println("Se ha presionado el botón");
 	}
 

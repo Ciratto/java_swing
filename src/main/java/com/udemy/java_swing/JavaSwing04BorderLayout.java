@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class JavaSwing04LayoutBorder extends JFrame implements ActionListener {
+public class JavaSwing04BorderLayout extends JFrame implements ActionListener {
 	//Cuando arranca contruyo la pantalla.
 	public static void main(String[] args) {
-		new JavaSwing04LayoutBorder();
+		new JavaSwing04BorderLayout();
 
 	}
 
-	public JavaSwing04LayoutBorder() {
+	public JavaSwing04BorderLayout() {
 		super("Ejemplo de Ventana con Entorno Flotante");
 		
 		JPanel panel = new JPanel(new BorderLayout(8,4));
