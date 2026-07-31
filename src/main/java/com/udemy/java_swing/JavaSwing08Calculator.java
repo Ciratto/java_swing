@@ -1,9 +1,13 @@
 package com.udemy.java_swing;
 
+//Abstract Window Toolkit, antiguo componentes pesados dependientes del Sistema operativo.
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+//Swing mas moderno, componentes livianos dibujados por java.
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -18,6 +22,12 @@ public class JavaSwing08Calculator extends JFrame{
 	JTextField numeroB;
 	JTextField result;
 	
+	private static final String SUMA = "Suma";
+	private static final String RESTA = "Resta";
+	private static final String DIVIDE = "División";
+	private static final String MUTIPLI = "Multiplicación";
+	private static final String EXIT = "Salir";
+	
 	//Contruyo ventana.
 	private JavaSwing08Calculator() {
 		super("Ejemplo Calculadora");
@@ -26,11 +36,11 @@ public class JavaSwing08Calculator extends JFrame{
 		JMenuBar menuBar = new JMenuBar();	 
 		JMenu menuOperaciones = new JMenu("Operaciones");
 		JMenu menuExit = new JMenu("Exit");
-		JMenuItem itemAdd = new JMenuItem("Suma");
-		JMenuItem itemSub = new JMenuItem("Resta");
-		JMenuItem itemDiv = new JMenuItem("Divide");
-		JMenuItem itemMulti = new JMenuItem("Multiplica");
-		JMenuItem itemClose = new JMenuItem("Salir");
+		JMenuItem itemAdd = new JMenuItem(SUMA);
+		JMenuItem itemSub = new JMenuItem(RESTA);
+		JMenuItem itemDiv = new JMenuItem(DIVIDE);
+		JMenuItem itemMulti = new JMenuItem(MUTIPLI);
+		JMenuItem itemClose = new JMenuItem(EXIT);
 
 		menuBar.add(menuOperaciones);
 		menuBar.add(menuExit);
@@ -50,22 +60,70 @@ public class JavaSwing08Calculator extends JFrame{
 		panelCentro.add(new JLabel("Numero 2"));
 		panelCentro.add(numeroB = new JTextField(3));
 		panelCentro.add(new JLabel("Resultado"));
-		panelCentro.add(result = new JTextField(5));
+		panelCentro.add(result = new JTextField(20));
 		
 		//Contenedor principal.------------------------
 		Container container = getContentPane(); 	
 		container.setLayout(new BorderLayout()); //Que los componente sinteriores se sectoricen por norte, sur, este, oeste, y centro
 		container.add(panelCentro, BorderLayout.CENTER); //Que el panel central justamente este en el centro.
 
+		//Listeners
+		itemAdd.addActionListener(new btnClickActionListener());
+		itemSub.addActionListener(new btnClickActionListener());
+		itemDiv.addActionListener(new btnClickActionListener());
+		itemMulti.addActionListener(new btnClickActionListener());
+		itemClose.addActionListener(new btnClickActionListener());
+		
+		numeroA.setHorizontalAlignment(JTextField.CENTER);
+		numeroB.setHorizontalAlignment(JTextField.CENTER);
+		result.setHorizontalAlignment(JTextField.CENTER);
 		result.setEditable(false);
 		
 		setJMenuBar(menuBar);
 		setLocationRelativeTo(null);
-		setSize(400,200);
+		setSize(600,200);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	};
 	
+	private class btnClickActionListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String operacion = e.getActionCommand();
+				if (operacion.equals(EXIT)){
+					dispose();
+				}
+				
+				Double numA = Double.parseDouble(numeroA.getText().trim());
+				Double numB = Double.parseDouble(numeroB.getText().trim());
+				
+				switch (operacion) {
+					case SUMA:
+						result.setText(String.valueOf(numA + numB));
+						break;
+					case RESTA:
+						result.setText(String.valueOf(numA - numB));
+						break;
+					case DIVIDE:
+						result.setText(String.valueOf(numA / numB));
+						break;
+					case MUTIPLI:
+						result.setText(String.valueOf(numA * numB));
+						break;						
+					default:
+						result.setText("0");
+						break;	
+				}			
+			} catch(NumberFormatException nex) {
+				result.setText("Err Format Number");
+			} catch(ArithmeticException aex) {
+				result.setText("Err Operación");
+			} catch(Exception ex) {
+				result.setText("Err");
+			}
+		}
+	}
 	
 	//Abro pantalla
 	public static void main(String[] args) {
